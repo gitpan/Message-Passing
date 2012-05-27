@@ -1,0 +1,32 @@
+0.002_01
+   - Add more core roles for use by extensions which need to make
+     a connection.
+
+   - Rename to Message::Passing, as it's a better description
+     of what we do, and will cause less confusion with other projects.
+
+0.002
+    - Support a --daemonize option in logstash scripts.
+
+    - Support a --pid_file option in logstash scripts.
+
+    - Allow inputs to coerce a hash in output_to to an output,
+      which is more verbose than the DSL, but also allows you
+      to setup simple output chains from a simple data structure
+      (such as you might read in from a config file).
+
+    - Explicitly turn off output buffering in STDOUT output.
+      This means that piping the STDOUT output to a file (for
+      logging or debugging purposes) works as expected, without
+      batching writes.
+
+    - Change logstash script to use the perl interpreter it is
+      installed with, rather than the one in $PATH right now.
+
+    - Fix issue using Filter::T in the DSL
+
+    - Fix multiple inputs going to the same output.
+
+0.001
+    - Initial version.
+

@@ -1,0 +1,9 @@
+#!perl
+use FindBin qw/ $Bin /;
+use lib "$Bin/../lib"; # FIXME
+use strict;
+use warnings;
+use Message::Passing;
+
+Message::Passing->start;
+

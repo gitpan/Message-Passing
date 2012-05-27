@@ -1,0 +1,37 @@
+---
+abstract: 'a perl subset of Logstash <http://logstash.net>'
+author:
+  - 'Tomas (t0m) Doran <bobtfish@bobtfish.net>'
+build_requires:
+  ExtUtils::MakeMaker: 6.59
+configure_requires:
+  ExtUtils::MakeMaker: 6.59
+distribution_type: module
+dynamic_config: 1
+generated_by: 'Module::Install version 1.06'
+license: agpl_3
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+module_name: Message::Passing
+name: Message-Passing
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  AnyEvent: 0
+  JSON: 2.0
+  Moose: 0
+  MooseX::Getopt: 0
+  MooseX::Types::Common: 0
+  MooseX::Types::LoadableClass: 0
+  String::RewritePrefix: 0
+  Task::Weaken: 0
+  Try::Tiny: 0
+  namespace::autoclean: 0
+  perl: 5.8.4
+resources:
+  repository: git://github.com/suretec/Message-Passing.git
+version: 0.002_01
+x_authority: GHENRY
