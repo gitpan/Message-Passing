@@ -1,5 +1,5 @@
 ---
-abstract: 'a perl subset of Logstash <http://logstash.net>'
+abstract: 'a simple way of doing messaging.'
 author:
   - 'Tomas (t0m) Doran <bobtfish@bobtfish.net>'
 build_requires:
@@ -33,5 +33,5 @@ requires:
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.002_01
+version: 0.003
 x_authority: GHENRY
