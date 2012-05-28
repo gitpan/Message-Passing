@@ -13,7 +13,7 @@ with
     'Message::Passing::Role::CLIComponent' => { name => 'filter', default => 'Null' },
     'Message::Passing::Role::Script';
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 $VERSION = eval $VERSION;
 
 sub build_chain {
@@ -45,7 +45,7 @@ Message::Passing - a simple way of doing messaging.
 
 =head1 SYNOPSIS
 
-    message-passing --input STDIN --output STDOUT
+    message-pass --input STDIN --output STDOUT
     {"foo": "bar"}
     {"foo":"bar"}
 
@@ -192,6 +192,22 @@ This is the entry point for the script.
 =head1 AUTHOR
 
 Tomas (t0m) Doran <bobtfish@bobtfish.net>
+
+=head1 SUPPORT
+
+=head2 Bugs
+
+Please log bugs at L<rt.cpan.org>. Each distribution has a bugtracker
+link in it's L<metacpan.org> page.
+
+=head2 Discussion
+
+L<#message-passing> on L<irc.perl.org>.
+
+=head2 Source code
+
+Source code for all modules is available at L<http://github.com/suretec>
+and forks / patches are very welcome.
 
 =head1 SPONSORSHIP
 
