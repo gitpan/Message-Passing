@@ -64,6 +64,9 @@ COMPONENTS
 
     Message::Passing::Input::STDIN
     Message::Passing::Input::ZeroMQ
+    Message::Passing::Input::STOMP
+    Message::Passing::Input::AMQP
+    Message::Passing::Input::Syslog
     Message::Passing::Input::Test
 
     You can easily write your own input, just use AnyEvent, and consume
@@ -90,8 +93,8 @@ COMPONENTS
     Outputs send data to somewhere, i.e. they consume messages.
 
     Message::Passing::Output::STDOUT
-    Message::Passing::Output::AMQP - COMING SOON
-    (<https://github.com/suretec/Message-Passing-AMQP>)
+    Message::Passing::Output::AMQP
+    Message::Passing::Output::STOMP
     Message::Passing::Output::ZeroMQ
     Message::Passing::Output::WebHooks
     Message::Passing::Output::ElasticSearch - COMING SOON
@@ -123,7 +126,7 @@ AUTHOR
 
 SUPPORT
   Bugs
-    Please log bugs at rt.cpan.org. Each distribution has a bugtracker link
+    Please log bugs at rt.cpan.org. Each distribution has a bug tracker link
     in it's metacpan.org page.
 
   Discussion
@@ -135,7 +138,7 @@ SUPPORT
 
 SPONSORSHIP
     This module exists due to the wonderful people at Suretec Systems Ltd.
-    <http://www.suretecsystems.com/> who sponsored it's development for its
+    <http://www.suretecsystems.com/> who sponsored its development for its
     VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
     the SureVoIP API -
     <http://www.surevoip.co.uk/support/wiki/api_documentation>

@@ -13,7 +13,7 @@ with
     'Message::Passing::Role::CLIComponent' => { name => 'filter', default => 'Null' },
     'Message::Passing::Role::Script';
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 $VERSION = eval $VERSION;
 
 sub build_chain {
@@ -111,6 +111,12 @@ Inputs include:
 
 =item L<Message::Passing::Input::ZeroMQ>
 
+=item L<Message::Passing::Input::STOMP>
+
+=item L<Message::Passing::Input::AMQP>
+
+=item L<Message::Passing::Input::Syslog>
+
 =item L<Message::Passing::Input::Test>
 
 =back
@@ -148,7 +154,9 @@ Outputs send data to somewhere, i.e. they consume messages.
 
 =item L<Message::Passing::Output::STDOUT>
 
-=item L<Message::Passing::Output::AMQP> - COMING SOON (L<https://github.com/suretec/Message-Passing-AMQP>)
+=item L<Message::Passing::Output::AMQP>
+
+=item L<Message::Passing::Output::STOMP>
 
 =item L<Message::Passing::Output::ZeroMQ>
 
@@ -197,7 +205,7 @@ Tomas (t0m) Doran <bobtfish@bobtfish.net>
 
 =head2 Bugs
 
-Please log bugs at L<rt.cpan.org>. Each distribution has a bugtracker
+Please log bugs at L<rt.cpan.org>. Each distribution has a bug tracker
 link in it's L<metacpan.org> page.
 
 =head2 Discussion
@@ -212,7 +220,7 @@ and forks / patches are very welcome.
 =head1 SPONSORSHIP
 
 This module exists due to the wonderful people at Suretec Systems Ltd.
-<http://www.suretecsystems.com/> who sponsored it's development for its
+<http://www.suretecsystems.com/> who sponsored its development for its
 VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
 the SureVoIP API - 
 <http://www.surevoip.co.uk/support/wiki/api_documentation>
