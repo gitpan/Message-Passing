@@ -16,7 +16,11 @@ lib/Message/Passing.pm
 lib/Message/Passing/DSL.pm
 lib/Message/Passing/DSL/Factory.pm
 lib/Message/Passing/Filter/All.pm
+lib/Message/Passing/Filter/Decoder/JSON.pm
+lib/Message/Passing/Filter/Decoder/Null.pm
 lib/Message/Passing/Filter/Delay.pm
+lib/Message/Passing/Filter/Encoder/JSON.pm
+lib/Message/Passing/Filter/Encoder/Null.pm
 lib/Message/Passing/Filter/Key.pm
 lib/Message/Passing/Filter/Null.pm
 lib/Message/Passing/Filter/T.pm

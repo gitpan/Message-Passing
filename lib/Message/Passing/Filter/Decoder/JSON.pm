@@ -1,32 +1,30 @@
-package Message::Passing::Role::Output;
-use Moose::Role;
-use JSON qw/ to_json /;
-use Scalar::Util qw/ blessed /;
+package Message::Passing::Filter::Decoder::JSON;
+use Moose;
+use JSON qw/ from_json /;
 use namespace::autoclean;
 
-has pretty => (
-    isa => 'Bool',
-    default => 0,
-    is => 'ro',
-);
+with 'Message::Passing::Role::Filter';
 
-requires 'consume';
+sub filter { from_json( $_[1], { utf8  => 1 } ) }
 
+__PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME
 
-Message::Passing::Role::Output - Consumes messages
+Message::Passing::Role::Filter::Decoder::JSON
 
 =head1 DESCRIPTION
 
-This is a role for classes which consumer messages (e.g. a Message::Passing output)
+Decodes string messages from JSON into data structures.
 
-=head1 REQUIRED METHODS
+=head1 ATTRIBUTES
 
-=head2 consume
+=head1 METHODS
 
-Consume a message
+=head2 filter
+
+JSON decodes a message supplied as a parameter.
 
 =head1 SEE ALSO
 

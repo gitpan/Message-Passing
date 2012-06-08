@@ -1,32 +1,29 @@
-package Message::Passing::Role::Output;
-use Moose::Role;
-use JSON qw/ to_json /;
-use Scalar::Util qw/ blessed /;
+package Message::Passing::Filter::Decoder::Null;
+use Moose;
 use namespace::autoclean;
 
-has pretty => (
-    isa => 'Bool',
-    default => 0,
-    is => 'ro',
-);
+with 'Message::Passing::Role::Filter';
 
-requires 'consume';
+sub filter { $_[1] }
 
+__PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME
 
-Message::Passing::Role::Output - Consumes messages
+Message::Passing::Filter::Deccoder::Null
 
 =head1 DESCRIPTION
 
-This is a role for classes which consumer messages (e.g. a Message::Passing output)
+Does no Decoding
 
-=head1 REQUIRED METHODS
+=head1 ATTRIBUTES
 
-=head2 consume
+=head1 METHODS
 
-Consume a message
+=head2 filter
+
+Returns message it's passed, verbatim
 
 =head1 SEE ALSO
 
