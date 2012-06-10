@@ -32,13 +32,17 @@ lib/Message/Passing/Manual/Concepts.pod
 lib/Message/Passing/Manual/Cookbook.pod
 lib/Message/Passing/Output/Callback.pm
 lib/Message/Passing/Output/File.pm
+lib/Message/Passing/Output/IO/Handle.pm
 lib/Message/Passing/Output/Null.pm
+lib/Message/Passing/Output/STDERR.pm
 lib/Message/Passing/Output/STDOUT.pm
 lib/Message/Passing/Output/Test.pm
 lib/Message/Passing/Role/CLIComponent.pm
 lib/Message/Passing/Role/ConnectionManager.pm
 lib/Message/Passing/Role/Filter.pm
 lib/Message/Passing/Role/HasAConnection.pm
+lib/Message/Passing/Role/HasHostnameAndPort.pm
+lib/Message/Passing/Role/HasUsernameAndPassword.pm
 lib/Message/Passing/Role/Input.pm
 lib/Message/Passing/Role/Output.pm
 lib/Message/Passing/Role/Script.pm

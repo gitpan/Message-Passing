@@ -1,39 +1,41 @@
-package Message::Passing::Filter::Encoder::Null;
+package Message::Passing::Output::STDERR;
 use Moose;
 use namespace::autoclean;
 
-extends 'Message::Passing::Filter::Null';
+with 'Message::Passing::Role::Output';
+
+sub consume {
+    my $self = shift;
+    local $|=1;
+    print STDERR shift() . "\n";
+}
 
 __PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME
 
-Message::Passing::Filter::Enccoder::Null
+Message::Passing::Output::STDOUT - STDOUT output
+
+=head1 SYNOPSIS
+
+    message-pass --input STDIN --output STDERR
+    {"foo": "bar"}
+    {"foo":"bar"}
 
 =head1 DESCRIPTION
 
-Does no Encoding
-
-=head1 ATTRIBUTES
+Output messages to STDERR
 
 =head1 METHODS
 
-=head2 filter
+=head2 consume
 
-Returns message it's passed, verbatim
+Consumes a message by printing it, followed by \n
 
 =head1 SEE ALSO
 
-=over
-
-=item L<Message::Passing::Filter::Null>
-
-=item L<Message::Passing>
-
-=item L<Message::Passing::Manual::Concepts>
-
-=back
+L<Message::Passing>
 
 =head1 SPONSORSHIP
 
@@ -48,6 +50,4 @@ the SureVoIP API -
 See L<Message::Passing>.
 
 =cut
-
-1;
 

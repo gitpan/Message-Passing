@@ -14,6 +14,20 @@ has daemonize => (
     default => 0,
 );
 
+has io_priority => (
+    isa => enum([qw[ none be rt idle ]]),
+    is => 'ro',
+    predicate => "_has_io_priority",
+);
+
+foreach my $name (qw/ user pid_file /) {
+    has $name => (
+        isa => 'Str',
+        is => 'ro',
+        predicate => "_has_$name",
+    );
+}
+
 sub deamonize_if_needed {
     my ($self) = @_;
     my $fh;
@@ -51,20 +65,6 @@ sub change_uid_if_needed {
     }
 }
 
-foreach my $name (qw/ user pid_file /) {
-    has $name => (
-        isa => 'Str',
-        is => 'ro',
-        predicate => "_has_$name",
-    );
-}
-
-has io_priority => (
-    isa => enum([qw[ none be rt idle ]]),
-    is => 'ro',
-    predicate => "_has_io_priority",
-);
-
 sub set_io_priority_if_needed {
     my $self = shift;
     return unless $self->_has_io_priority;
@@ -84,7 +84,7 @@ sub start {
     $instance->set_io_priority_if_needed;
     $instance->change_uid_if_needed;
     $instance->deamonize_if_needed;
-    run_log_server $instance->build_chain;
+    run_message_server $instance->build_chain;
 }
 
 1;
@@ -100,8 +100,10 @@ Message::Passing:Role::Script - Handy role for building messaging scripts.
     use Moose;
     use Message::Passing::DSL;
 
-    with 'Message::Passing::Role::Script';
-    with 'MooseX::Getopt';
+    with qw/
+        Message::Passing::Role::Script
+        MooseX::Getopt
+    /;
 
     has foo => (
         is => 'ro',
@@ -110,7 +112,7 @@ Message::Passing:Role::Script - Handy role for building messaging scripts.
 
     sub build_chain {
         my $self = shift;
-        log_chain {
+        message_chain {
             input example => ( output_to => 'test_out', .... );
             output test_out => ( foo => $self->foo, ... );
         };
@@ -141,6 +143,40 @@ the command line options, and start a message passing server..
 Return a chain of message processors, or an array reference with
 multiple chains of message processors.
 
+=head1 ATTRIBUTES
+
+=head2 daemonize
+
+Do a double fork and lose controlling terminal.
+
+Used to run scripts in the background.
+
+=head2 io_priority
+
+The IO priority to run the script at..
+
+Valid values for the IO priority are:
+
+=over
+
+=item none
+
+=item be
+
+=item rt
+
+=item idle
+
+=back
+
+=head2 user
+
+Changes the user the script is running as. You probably need to run the script as root for this option to work.
+
+=head2 pid_file
+
+Write a pid file out. Useful for running Message::Passing scripts as daemons and/or from init.d scripts.
+
 =head1 METHODS
 
 =head2 start
@@ -165,24 +201,6 @@ Tires to daemonize if the --daemonize option has been supplied
 Tries to set the process' IO priority if the --io_priority option
 has been supplied.
 
-Valid values for the IO priority are:
-
-=over
-
-=item none
-
-=item be
-
-=item rt
-
-=item idle
-
-=back
-
-=head1 AUTHOR
-
-Tomas (t0m) Doran <bobtfish@bobtfish.net>
-
 =head1 SPONSORSHIP
 
 This module exists due to the wonderful people at Suretec Systems Ltd.
@@ -191,20 +209,9 @@ VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
 the SureVoIP API - 
 <http://www.surevoip.co.uk/support/wiki/api_documentation>
 
-=head1 COPYRIGHT
+=head1 AUTHOR, COPYRIGHT AND LICENSE
 
-Copyright Suretec Systems Ltd. 2012.
-
-Logstash (upon which many ideas for this project is based, but
-which we do not reuse any code from) is copyright 2010 Jorden Sissel.
-
-=head1 LICENSE
-
-GNU Affero General Public License, Version 3
-
-If you feel this is too restrictive to be able to use this software,
-please talk to us as we'd be willing to consider re-licensing under
-less restrictive terms.
+See L<Message::Passing>.
 
 =cut
 

@@ -173,10 +173,45 @@ A Boolean indicating if the connection is currently considered fully connected
 The connection object (if we are connected, or connecting currently) - can
 be undefined if we are during a reconnect timeout.
 
+=head2 timeout
+
+Connections will be timed out and aborted after this time if they haven't
+successfully connected.
+
+Defaults to 30s
+
+=head2 reconnect_after
+
+The number of seconds to wait before starting a reconnect after a connection has timed out
+or been aborted.
+
+Defaults to 2s
+
 =head1 METHODS
 
-=head2 subscribe_to_connect
+=head2 subscribe_to_connect ($subscriber)
 
+This is called by your Input or Output, as C<< $self->connection_manager->subscribe_to_connect($self) >>.
 
+This is done for you by L<Message::Passing::Role::HasAConnection> usually..
+
+This arranges to store a weak reference to your component, allowing the 
+connection manager to call the C<< ->connect >>
+or C<< ->disconnect >> methods for any components registered when a connection is established or destroyed.
+
+Note that if the connection manager is already connected, it will B<immediately> call the C<< ->connect >> method.
+
+=head1 SPONSORSHIP
+
+This module exists due to the wonderful people at Suretec Systems Ltd.
+<http://www.suretecsystems.com/> who sponsored its development for its
+VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
+the SureVoIP API - 
+<http://www.surevoip.co.uk/support/wiki/api_documentation>
+
+==head1 AUTHOR, COPYRIGHT AND LICENSE
+
+See L<Message::Passing>.
 
 =cut
+

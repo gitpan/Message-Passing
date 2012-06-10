@@ -34,7 +34,7 @@ The connection manager object is assumed to have the C<< ->subscribe_to_connect 
 
 =head1 REQUIRED METHODS
 
-=head2 _build_connection
+=head2 _build_connection_manager
 
 Will be called at BUILD (i.e. object construction) time, should return
 a connection manager object (i.e. an object that C<< ->subscribe_to_connect >>
@@ -56,11 +56,33 @@ The client received an error or otherwise disconnected.
 
 =head2 connection_manager
 
+Holds the connection manger returned by the C<_build_connection_manager> method.
+
 =head1 WRAPPED METHODS
 
 =head2 BUILD
 
 Is wrapped to build the connection manager object.
+
+=head1 SEE ALSO
+
+=over
+
+=item L<Message::Passing::Role::ConenctionManager>.
+
+=back
+
+=head1 SPONSORSHIP
+
+This module exists due to the wonderful people at Suretec Systems Ltd.
+<http://www.suretecsystems.com/> who sponsored its development for its
+VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
+the SureVoIP API - 
+<http://www.surevoip.co.uk/support/wiki/api_documentation>
+
+=head1 AUTHOR, COPYRIGHT AND LICENSE
+
+See L<Message::Passing>.
 
 =cut
 

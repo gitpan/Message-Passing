@@ -17,7 +17,7 @@ with
     'Message::Passing::Role::CLIComponent' => { name => 'encoder', default => 'JSON' },
     'Message::Passing::Role::Script';
 
-our $VERSION = '0.007';
+our $VERSION = '0.008';
 $VERSION = eval $VERSION;
 
 sub get_config_from_file {
@@ -31,7 +31,7 @@ sub get_config_from_file {
 
 sub build_chain {
     my $self = shift;
-        log_chain {
+        message_chain {
             output output => (
                 $self->output_options,
                 class => $self->output,
@@ -218,7 +218,7 @@ Builds and returns the configured chain of input => filter => output
 
 =head3 start
 
-Class method to call the run_log_server function with the results of
+Class method to call the run_message_server function with the results of
 having constructed an instance of this class, parsed command line options
 and constructed a chain.
 

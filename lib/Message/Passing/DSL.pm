@@ -9,15 +9,15 @@ use AnyEvent;
 use Moose::Util qw/ does_role /;
 
 Moose::Exporter->setup_import_methods(
-    as_is     => [qw/ run_log_server log_chain input filter output decoder encoder /],
+    as_is     => [qw/ run_message_server message_chain input filter output decoder encoder /],
 );
 
 our $FACTORY;
 sub _check_factory {
-    confess("Not inside a chain { block!!") unless $FACTORY;
+    confess("Not inside a message_chain { block!!") unless $FACTORY;
 }
 
-sub log_chain (&) {
+sub message_chain (&) {
     my $code = shift;
     if ($FACTORY) {
         confess("Cannot chain within a chain");
@@ -90,7 +90,7 @@ sub encoder {
     );
 }
 
-sub run_log_server {
+sub run_message_server {
     my $chain = shift;
     AnyEvent->condvar->recv;
 }
@@ -117,7 +117,7 @@ Message::Passing::DSL - An easy way to make chains of Message::Passing component
 
     sub build_chain {
         my $self = shift;
-        log_chain {
+        message_chain {
             output console => (
                 class => 'STDOUT',
             );
@@ -136,43 +136,49 @@ Message::Passing::DSL - An easy way to make chains of Message::Passing component
 
 This module provides a simple to use helper system for writing
 scripts which implement a L<Message::Passing> server, like
-the built in message-pass script.
+the built in L<message-pass> script.
+
+Rather than having to pass instances of an output to each input in the
+C<output_to> attribute, and full class names, you can use short names
+for component classes, and strings for the C<output_to> attribute,
+the DSL resolves these and deals with instance construction for you.
+
+See example in the SYNOPSIS, and details for the exported sugar
+functions below.
 
 =head2 FUNCTIONS
 
-=head3 log_chain
+=head3 message_chain
 
-Constructs a log chain (i.e. a series of log objects feeding into each
-other), warns about any unused parts of the chain, and returns the
-chain head (i.e. the input class).
+Constructs a message chain (i.e. a series of Message::Passing objects
+feeding into each other), warns about any unused parts of the chain,
+and returns an array ref to the heads of the chain (i.e. the input class(es)).
 
 Maintains a registry / factory for the log classes, which is used to
 allow the resolving of symbolic names in the output_to key to function.
-
-See example in the SYNOPSIS, and details on the other functions below.
 
 =head3 output
 
 Constructs a named output within a chain.
 
-    log_chain {
+    message_chain {
         output foo => ( class => 'STDOUT' );
         ....
     };
 
-Class names will be assumed to prefixed with 'Log::Stash::Output::',
+Class names will be assumed to prefixed with 'Message::Passing::Output::',
 unless you prefix the class with + e.g. C<< +My::Own::Output::Class >>
 
 =head3 encoder
 
 Constructs a named encoder within a chain.
 
-    log_chain {
+    message_chain {
         encoder fooenc => ( output_to => 'out', class => 'JSON' );
         ....
     };
 
-Class names will be assumed to prefixed with 'Log::Stash::Filter::Encoder::',
+Class names will be assumed to prefixed with 'Message::Passing::Filter::Encoder::',
 unless you prefix the class with + e.g. C<< +My::Own::Encoder::Class >>
 
 =head3 filter
@@ -180,25 +186,25 @@ unless you prefix the class with + e.g. C<< +My::Own::Encoder::Class >>
 Constructs a named filter (which can act as both an output and an input)
 within a chain.
 
-    log_chain {
+    message_chain {
         ...
         filter bar => ( output_to => 'fooenc', class => 'Null' );
         ...
     };
 
-Class names will be assumed to prefixed with 'Log::Stash::Filter::',
+Class names will be assumed to prefixed with 'Message::Passing::Filter::',
 unless you prefix the class with + e.g. C<< +My::Own::Filter::Class >>
 
 =head3 decoder
 
 Constructs a named decoder within a chain.
 
-    log_chain {
+    message_chain {
         decoder zmq_decode => ( output_to => 'filter', class => 'JSON' );
         ....
     };
 
-Class names will be assumed to prefixed with 'Log::Stash::Filter::Decoder::',
+Class names will be assumed to prefixed with 'Message::Passing::Filter::Decoder::',
 unless you prefix the class with + e.g. C<< +My::Own::Encoder::Class >>
 
 
@@ -206,22 +212,22 @@ unless you prefix the class with + e.g. C<< +My::Own::Encoder::Class >>
 
 The last thing in a chain - produces data which gets consumed.
 
-    log_chain {
+    message_chain {
         ...
         input zmq => ( output_to => 'zmq_decode', class => 'ZeroMQ', bind => '...' );
         ....
     }
 
-Class names will be assumed to prefixed with 'Log::Stash::Output::',
+Class names will be assumed to prefixed with 'Message::Passing::Output::',
 unless you prefix the class with + e.g. C<< +My::Own::Output::Class >>
 
-=head3 run_log_server
+=head3 run_message_server
 
 This enters the event loop and causes log events to be consumed and
 processed.
 
-Can be passed a log_chain to run, although this is entirely optional
-(as all log chains which are still in scope will run when the event
+Can be passed a message_chain to run, although this is entirely optional
+(as all chains which are still in scope will run when the event
 loop is entered).
 
 =head1 SPONSORSHIP
