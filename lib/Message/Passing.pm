@@ -1,6 +1,7 @@
 package Message::Passing;
 use Moose;
 use Getopt::Long qw(:config pass_through);
+use Config::Any;
 use namespace::autoclean;
 use 5.8.4;
 
@@ -8,6 +9,7 @@ use Message::Passing::DSL;
 
 with
     'MooseX::Getopt',
+    'MooseX::ConfigFromFile',
     'Message::Passing::Role::CLIComponent' => { name => 'input' },
     'Message::Passing::Role::CLIComponent' => { name => 'output' },
     'Message::Passing::Role::CLIComponent' => { name => 'filter', default => 'Null' },
@@ -15,8 +17,17 @@ with
     'Message::Passing::Role::CLIComponent' => { name => 'encoder', default => 'JSON' },
     'Message::Passing::Role::Script';
 
-our $VERSION = '0.006';
+our $VERSION = '0.007';
 $VERSION = eval $VERSION;
+
+sub get_config_from_file {
+    my ($class, $filename) = @_;
+    my ($fn, $cfg) = %{ Config::Any->load_files({
+        files => [$filename],
+        use_ext => 1,
+    })->[0] };
+    return $cfg;
+}
 
 sub build_chain {
     my $self = shift;
@@ -129,6 +140,8 @@ Inputs include:
 
 =item L<Message::Passing::Input::Syslog>
 
+=item L<Message::Passing::Input::Redis>
+
 =item L<Message::Passing::Input::Test>
 
 =back
@@ -175,6 +188,8 @@ Outputs send data to somewhere, i.e. they consume messages.
 =item L<Message::Passing::Output::WebHooks>
 
 =item L<Message::Passing::Output::ElasticSearch> - COMING SOON (L<https://github.com/suretec/Message-Passing-Output-ElasticSearch>)
+
+=item L<Message::Passing::Output::Redis>
 
 =item L<Message::Passing::Output::Test>
 

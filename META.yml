@@ -21,8 +21,10 @@ no_index:
     - t
 requires:
   AnyEvent: 0
+  Config::Any: 0
   JSON: 2.0
   Moose: 0
+  MooseX::ConfigFromFile: 0
   MooseX::Getopt: 0
   MooseX::Types: 0
   MooseX::Types::Common: 0
@@ -34,5 +36,5 @@ requires:
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.006
+version: 0.007
 x_authority: GHENRY
