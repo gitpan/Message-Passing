@@ -28,8 +28,10 @@ lib/Message/Passing/Input/FileTail.pm
 lib/Message/Passing/Input/Null.pm
 lib/Message/Passing/Input/STDIN.pm
 lib/Message/Passing/Manual.pod
+lib/Message/Passing/Manual/Components.pod
 lib/Message/Passing/Manual/Concepts.pod
 lib/Message/Passing/Manual/Cookbook.pod
+lib/Message/Passing/Manual/Workers.pod
 lib/Message/Passing/Output/Callback.pm
 lib/Message/Passing/Output/File.pm
 lib/Message/Passing/Output/IO/Handle.pm
@@ -41,7 +43,9 @@ lib/Message/Passing/Role/CLIComponent.pm
 lib/Message/Passing/Role/ConnectionManager.pm
 lib/Message/Passing/Role/Filter.pm
 lib/Message/Passing/Role/HasAConnection.pm
+lib/Message/Passing/Role/HasErrorChain.pm
 lib/Message/Passing/Role/HasHostnameAndPort.pm
+lib/Message/Passing/Role/HasTimeoutAndReconnectAfter.pm
 lib/Message/Passing/Role/HasUsernameAndPassword.pm
 lib/Message/Passing/Role/Input.pm
 lib/Message/Passing/Role/Output.pm

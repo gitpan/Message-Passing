@@ -9,7 +9,7 @@ use AnyEvent;
 use Moose::Util qw/ does_role /;
 
 Moose::Exporter->setup_import_methods(
-    as_is     => [qw/ run_message_server message_chain input filter output decoder encoder /],
+    as_is     => [qw/ run_message_server message_chain input filter output decoder encoder error_log /],
 );
 
 our $FACTORY;
@@ -38,6 +38,14 @@ sub message_chain (&) {
         grep { does_role($_, 'Message::Passing::Role::Input') }
         values %items
     ];
+}
+
+sub error_log {
+    my %opts = @_;
+    _check_factory();
+    $FACTORY->set_error(
+        %opts,
+    );
 }
 
 sub input {
@@ -220,6 +228,10 @@ The last thing in a chain - produces data which gets consumed.
 
 Class names will be assumed to prefixed with 'Message::Passing::Output::',
 unless you prefix the class with + e.g. C<< +My::Own::Output::Class >>
+
+=head3 error_log
+
+Setup the error logging output. Takes the same arguments as an C<< input xxx => () >> block, except without a name.
 
 =head3 run_message_server
 

@@ -3,7 +3,13 @@ use Moose::Role;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 
-requires '_build_connection_manager', 'connected';
+with qw/
+    Message::Passing::Role::HasTimeoutAndReconnectAfter
+    Message::Passing::Role::HasErrorChain
+/;
+
+# requires qw/ _connection_manager_attributes _connection_manager_class /;
+requires 'connected';
 
 has connection_manager => (
     is => 'ro',
@@ -11,6 +17,17 @@ has connection_manager => (
     isa => duck_type([qw/subscribe_to_connect/]),
     builder => '_build_connection_manager',
 );
+
+sub _build_connection_manager {
+    my $self = shift;
+    confess "Cannot auto-build this connection manager"
+        unless $self->can('_connection_manager_attributes')
+            && $self->can('_connection_manager_class');
+    my %attrs = map { $_ => $self->$_ } (@{ $self->_connection_manager_attributes }, qw/timeout reconnect_after error/);
+    my $class = $self->_connection_manager_class;
+    Class::MOP::load_class($class);
+    $class->new(%attrs);
+}
 
 sub BUILD {}
 after BUILD => sub {

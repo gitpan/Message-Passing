@@ -1,16 +1,9 @@
 Need upload:
-    - Message::Passing
-    - Message::Passing::Redis *
-    - Message::Passing::Input::FreeSWITCH *
-    
     - Message::Passing::STOMP
     - Message::Passing::AMQP
+    - Message::Passing
 
 Code core/general:
-    - Connection code cleanup
-    - Unify hostname and port parsing between adaptors - remove server..
-    - Connect error handling
-    - Global error logging
     - Generic blessed object serialize filter
     - Logstash compatibility filter
     - Global registry and DSL support for connection managers
@@ -21,11 +14,6 @@ Specific adaptors
     - AMQP needs a lot of work
 
 Docs:
- Message::Passing::Manual::Scripts:
- - Write me!
- - encoders / decoders
- - How to write / override scripts
-
  Message::Passing::Manual::Concepts:
  - Proper script writing (after DSL example)
  - Other links.. in ::Concepts?
@@ -34,11 +22,6 @@ Docs:
  - Write
 
  Message::Passing::Manual::Cookbook:
- - Logging from an application
-   - Fix examples
-   - Example without Log::Dispatch
-   - Explain why ZMQ (this is in ::Concepts currently?)
-
  - Aggregating this log
    - Link to building own script
    - Note other script options
@@ -52,11 +35,6 @@ Docs:
    - Finish
 
  - Filtering messages
-
- - Writing your own
-   - Input
-   - Output
-   - Scripts - link to scripts docs
 
  - Putting it all together - log processor with filtering etc.
 
