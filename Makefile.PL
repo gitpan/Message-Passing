@@ -36,6 +36,10 @@ author_requires(
     'Pod::Coverage' => '0.19',
     'Pod::Coverage::TrustPod' => '0',
     'Test::Spelling' => '0',
+    'Compress::Zlib' => '0',
+    'Compress::Bzip2' => '0',
+    'Crypt::CBC' => '0',
+    'Crypt::Blowfish' => '0',
 );
 
 author_tests 't/author';

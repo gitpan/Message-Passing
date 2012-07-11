@@ -18,7 +18,7 @@ with
     'Message::Passing::Role::CLIComponent' => { name => 'error', default => 'STDERR' },
     'Message::Passing::Role::Script';
 
-our $VERSION = '0.009';
+our $VERSION = '0.010';
 $VERSION = eval $VERSION;
 
 sub get_config_from_file {
@@ -203,6 +203,10 @@ Outputs send data to somewhere, i.e. they consume messages.
 =head1 SEE ALSO
 
 =over
+
+=item L<Message::Passing::Manual> - The manual (incomplete currently)!
+
+=item L<http://www.slideshare.net/bobtfish/messaging-interoperability-and-log-aggregation-a-new-framework> - Slide deck!
 
 =item L<Log::Message::Structured> - For creating your log messages.
 

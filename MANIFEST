@@ -16,9 +16,15 @@ lib/Message/Passing.pm
 lib/Message/Passing/DSL.pm
 lib/Message/Passing/DSL/Factory.pm
 lib/Message/Passing/Filter/All.pm
+lib/Message/Passing/Filter/Decoder/Bzip2.pm
+lib/Message/Passing/Filter/Decoder/Crypt/CBC.pm
+lib/Message/Passing/Filter/Decoder/Gzip.pm
 lib/Message/Passing/Filter/Decoder/JSON.pm
 lib/Message/Passing/Filter/Decoder/Null.pm
 lib/Message/Passing/Filter/Delay.pm
+lib/Message/Passing/Filter/Encoder/Bzip2.pm
+lib/Message/Passing/Filter/Encoder/Crypt/CBC.pm
+lib/Message/Passing/Filter/Encoder/Gzip.pm
 lib/Message/Passing/Filter/Encoder/JSON.pm
 lib/Message/Passing/Filter/Encoder/Null.pm
 lib/Message/Passing/Filter/Key.pm
@@ -41,6 +47,7 @@ lib/Message/Passing/Output/STDOUT.pm
 lib/Message/Passing/Output/Test.pm
 lib/Message/Passing/Role/CLIComponent.pm
 lib/Message/Passing/Role/ConnectionManager.pm
+lib/Message/Passing/Role/Crypt/CBC.pm
 lib/Message/Passing/Role/Filter.pm
 lib/Message/Passing/Role/HasAConnection.pm
 lib/Message/Passing/Role/HasErrorChain.pm
@@ -62,7 +69,9 @@ t/author/notabs.t
 t/author/pod.t
 t/author/podcoverage.t
 t/author/spelling.t
+t/compress.t
 t/configfile.t
+t/crypt_cbc.t
 t/dsl.t
 t/filter.t
 t/input_decode.t
