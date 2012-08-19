@@ -21,20 +21,20 @@ no_index:
     - t
 requires:
   AnyEvent: 0
+  AnyEvent::Handle::UDP: 0
   Config::Any: 0
   JSON: 2.0
-  Moose: 0
-  MooseX::ConfigFromFile: 0
-  MooseX::Getopt: 0
-  MooseX::Types: 0
-  MooseX::Types::Common: 0
-  MooseX::Types::LoadableClass: 0
+  Module::Runtime: 0.013
+  Moo: 0.091011
+  MooX::Options: 3.3
+  MooX::Types::MooseLike: 0.08
+  Package::Variant: 1.001001
   String::RewritePrefix: 0
   Task::Weaken: 0
   Try::Tiny: 0
-  namespace::autoclean: 0
+  namespace::clean: 0.23
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.010
+version: 0.100
 x_authority: GHENRY

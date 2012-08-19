@@ -1,16 +1,13 @@
 package Message::Passing::DSL;
-
-use Moose ();
-use Moose::Exporter;
 use Message::Passing::DSL::Factory;
 use Carp qw/ confess /;
-use Scalar::Util qw/weaken/;
+use Scalar::Util qw/ blessed weaken /;
 use AnyEvent;
-use Moose::Util qw/ does_role /;
+use Exporter qw/ import /;
 
-Moose::Exporter->setup_import_methods(
-    as_is     => [qw/ run_message_server message_chain input filter output decoder encoder error_log /],
-);
+our @EXPORT = qw/
+    run_message_server message_chain input filter output decoder encoder error_log
+/;
 
 our $FACTORY;
 sub _check_factory {
@@ -24,18 +21,18 @@ sub message_chain (&) {
     }
     local $FACTORY = Message::Passing::DSL::Factory->new;
     $code->();
-    my %items = $FACTORY->registry;
+    my %items = %{ $FACTORY->registry };
     $FACTORY->clear_registry;
     weaken($items{$_}) for
-        grep { does_role($items{$_}, 'Message::Passing::Role::Output') }
+        grep { blessed($items{$_}) && $items{$_}->can('consume') }
         keys %items;
     foreach my $name (keys %items) {
         next if $items{$name};
         warn "Unused output or filter $name in chain\n";
     }
     return [
-        grep { !does_role($_, 'Message::Passing::Role::Output') }
-        grep { does_role($_, 'Message::Passing::Role::Input') }
+        grep { ! ( blessed($_) && $_->can('consume') ) }
+        grep { blessed($_) && $_->can('output_to') }
         values %items
     ];
 }
@@ -112,15 +109,18 @@ Message::Passing::DSL - An easy way to make chains of Message::Passing component
 =head1 SYNOPSIS
 
     package mylogcollectorscript;
+    use Moo;
+    use MooX::Options;
     use Message::Passing::DSL;
+    use MooX::Types::MooseLike::Base qw/ Str /;
+    use namespace::clean -except => 'meta';
 
-    with 'MooseX::GetOpt',
-        'Message::Passing::Role::Script';
+    with 'Message::Passing::Role::Script';
 
-    has socket_bind => (
+    option socket_bind => (
         is => 'ro',
-        isa => 'Str',
-        default => 'tcp://*:5558',
+        isa => Str,
+        default => sub { 'tcp://*:5558' },
     );
 
     sub build_chain {
@@ -247,7 +247,7 @@ loop is entered).
 This module exists due to the wonderful people at Suretec Systems Ltd.
 <http://www.suretecsystems.com/> who sponsored its development for its
 VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
-the SureVoIP API - 
+the SureVoIP API -
 <http://www.surevoip.co.uk/support/wiki/api_documentation>
 
 =head1 AUTHOR, COPYRIGHT AND LICENSE

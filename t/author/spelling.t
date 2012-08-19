@@ -4,6 +4,12 @@ use Test::More;
 use Test::Spelling;
 
 add_stopwords(qw(
+    UDP
+    hostname
+    filename
+    cb
+    Str
+    username
     decrypt
     decrypts
     Decrypts

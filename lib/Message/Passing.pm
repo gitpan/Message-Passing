@@ -1,25 +1,44 @@
 package Message::Passing;
-use Moose;
-use Getopt::Long qw(:config pass_through);
+use Moo;
 use Config::Any;
-use namespace::autoclean;
+use Message::Passing::Role::CLIComponent;
+use Message::Passing::DSL;
+use Carp qw/ confess /;
+use MooX::Options flavour => [qw( pass_through )], protect_argv => 0;
+use namespace::clean -except => [qw/ meta new_with_options parse_options _options_data _options_config/];
 use 5.8.4;
 
-use Message::Passing::DSL;
+our $VERSION = '0.100';
+$VERSION = eval $VERSION;
+
+sub new_with_options {
+    my $class = shift;
+    my %args = $class->parse_options(@_);
+
+    if (my $conf = $args{configfile}) {
+        my $cfg = $class->get_config_from_file($conf);
+        foreach my $k (keys %$cfg) {
+            if (!exists $args{$k}) {
+                $args{$k} = $cfg->{$k};
+            }
+        }
+    }
+    $class->new(%args);
+}
 
 with
-    'MooseX::Getopt',
-    'MooseX::ConfigFromFile',
-    'Message::Passing::Role::CLIComponent' => { name => 'input' },
-    'Message::Passing::Role::CLIComponent' => { name => 'output' },
-    'Message::Passing::Role::CLIComponent' => { name => 'filter', default => 'Null' },
-    'Message::Passing::Role::CLIComponent' => { name => 'decoder', default => 'JSON' },
-    'Message::Passing::Role::CLIComponent' => { name => 'encoder', default => 'JSON' },
-    'Message::Passing::Role::CLIComponent' => { name => 'error', default => 'STDERR' },
+    CLIComponent( name => 'input' ),
+    CLIComponent( name => 'output' ),
+    CLIComponent( name => 'filter', default => 'Null' ),
+    CLIComponent( name => 'decoder', default => 'JSON' ),
+    CLIComponent( name => 'encoder', default => 'JSON' ),
+    CLIComponent( name => 'error', default => 'STDERR' ),
     'Message::Passing::Role::Script';
 
-our $VERSION = '0.010';
-$VERSION = eval $VERSION;
+option configfile => (
+    is => 'ro',
+    format => 's',
+);
 
 sub get_config_from_file {
     my ($class, $filename) = @_;
@@ -32,39 +51,38 @@ sub get_config_from_file {
 
 sub build_chain {
     my $self = shift;
-        message_chain {
-            error_log(
-                $self->error_options,
-                class => $self->error,
-            );
-            output output => (
-                $self->output_options,
-                class => $self->output,
-            );
-            encoder("encoder",
-                $self->encoder_options,
-                class => $self->encoder,
-                output_to => 'output',
-            );
-            filter filter => (
-                $self->filter_options,
-                class => $self->filter,
-                output_to => 'encoder',
-            );
-            decoder("decoder",
-                $self->decoder_options,
-                class => $self->decoder,
-                output_to => 'filter',
-            );
-            input input => (
-                $self->input_options,
-                class => $self->input,
-                output_to => 'decoder',
-            );
-        };
+    message_chain {
+        error_log(
+            %{ $self->error_options },
+            class => $self->error,
+        );
+        output output => (
+            %{ $self->output_options },
+            class => $self->output,
+        );
+        encoder("encoder",
+            %{ $self->encoder_options },
+            class => $self->encoder,
+            output_to => 'output',
+        );
+        filter filter => (
+            %{ $self->filter_options },
+            class => $self->filter,
+            output_to => 'encoder',
+        );
+        decoder("decoder",
+            %{ $self->decoder_options },
+            class => $self->decoder,
+            output_to => 'filter',
+        );
+        input input => (
+            %{ $self->input_options },
+            class => $self->input,
+            output_to => 'decoder',
+        );
+    };
 }
 
-__PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME
@@ -216,8 +234,18 @@ Outputs send data to somewhere, i.e. they consume messages.
 
 =head1 THIS MODULE
 
-This is a simple L<MooseX::Getopt> script, with one input, one filter
-and one output.
+This is a simple L<MooX::Options> script, with one input, one filter
+and one output. To build your own similar scripts, see:
+
+=over
+
+=item L<Message::Passing::DSL> - To declare your message chains
+
+=item L<Message::Passing::Role::CLIComponent> - To provide C<foo> and C<foo_options> attribute pairs.
+
+=item L<Message::Passing::Role::Script> - To provide daemonization features.
+
+=back
 
 =head2 METHODS
 
@@ -258,7 +286,7 @@ and forks / patches are very welcome.
 This module exists due to the wonderful people at Suretec Systems Ltd.
 <http://www.suretecsystems.com/> who sponsored its development for its
 VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
-the SureVoIP API - 
+the SureVoIP API -
 <http://www.surevoip.co.uk/support/wiki/api_documentation>
 
 =head1 COPYRIGHT

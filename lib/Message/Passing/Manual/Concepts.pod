@@ -21,7 +21,7 @@ An output is simply a class with a C<consume> method. This will be called with a
 as it's only parameter, like this:
 
     $output->consume($message);
-    
+
 Outputs are expected to compose L<Message::Passing::Role::Output>.
 
 =head2 INPUTS
@@ -30,9 +30,9 @@ An input is simply a class with an C<output_to> attribute. Your code just calls 
 method on it's output, like this:
 
     $self->output_to->consume($message);
-    
+
 Outputs are expected to compose L<Message::Passing::Role::Input> which provides this attribute, and
-use the C<BUILD> method from Moose to do any work needed to start listening for events.
+use the C<BUILD> method from L<Moo> to do any work needed to start listening for events.
 
 =head2 FILTER
 
@@ -43,7 +43,7 @@ An optional L<Message::Passing::Role::Filter> is supplied, allowing you to provi
 method:
 
     with 'Message::Passing::Role::Filter';
-    
+
     sub filter {
         my ($self, $message) = @_;
         return $message; # Or return undef to drop it
@@ -71,7 +71,7 @@ So, this is all pretty easy, and you already know enough to pick up some compone
 
     use Message::Passing::Input::FileTail;
     use Message::Passing::Output::STDOUT;
-    
+
     Message::Passing::Input::FileTail->new(
         filename => $ARGV[0],
         output_to => Message::Passing::Output::STDOUT->new,
@@ -104,10 +104,10 @@ The example above becomes:
 L<AnyEvent> has been mentioned, and it's expected that scripts will use a supported event
 loop. This implies that your code is asynchronous, which is generally fine - however it should
 be noted that doing any long operation (non trivial database queries) will block the entire server - meaning
-no events will be processed. 
+no events will be processed.
 
 In cases such as these, running a pool of worker processes to distribute the blocking jobs is more appropriate,
-and easy to wire up (on one or more hosts). This is documented more fully in L<Message::Passing::Manual::Workers> XXX 
+and easy to wire up (on one or more hosts). This is documented more fully in L<Message::Passing::Manual::Workers>
 
 =head1 ZeroMQ
 

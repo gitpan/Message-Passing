@@ -1,28 +1,29 @@
 package Message::Passing::Role::Script;
-use Moose::Role;
+use Moo::Role;
+use MooX::Types::MooseLike::Base qw/ Bool Str /;
 use Getopt::Long qw(:config pass_through);
 use POSIX qw(setuid setgid);
-use Moose::Util::TypeConstraints;
 use Message::Passing::DSL;
-use namespace::autoclean;
+use namespace::clean -except => 'meta';
 
 requires 'build_chain';
 
 has daemonize => (
     is => 'ro',
-    isa => 'Bool',
-    default => 0,
+    isa => Bool,
+    default => sub { 0 },
 );
 
 has io_priority => (
-    isa => enum([qw[ none be rt idle ]]),
+    isa => sub { $_[0] =~ /^(none|be|rt|idle)$/ },
+    coerce => sub { lc $_[0] },
     is => 'ro',
     predicate => "_has_io_priority",
 );
 
 foreach my $name (qw/ user pid_file /) {
     has $name => (
-        isa => 'Str',
+        isa => Str,
         is => 'ro',
         predicate => "_has_$name",
     );
@@ -97,17 +98,16 @@ Message::Passing:Role::Script - Handy role for building messaging scripts.
 
     # my_message_passer.pl
     package My::Message::Passer;
-    use Moose;
+    use Moo;
+    use MooX::Options;
+    use MooX::Types::MooseLike::Base qw/ Bool /;
     use Message::Passing::DSL;
 
-    with qw/
-        Message::Passing::Role::Script
-        MooseX::Getopt
-    /;
+    with 'Message::Passing::Role::Script';
 
-    has foo => (
+    option foo => (
         is => 'ro',
-        isa => 'Bool',
+        isa => Bool,
     );
 
     sub build_chain {
@@ -125,7 +125,7 @@ Message::Passing:Role::Script - Handy role for building messaging scripts.
 
 This role can be used to make simple message passing scripts.
 
-The user implements a L<MooseX::Getopt> type script class, with a
+The user implements a L<MooX::Options> type script class, with a
 C<build_chain> method, that builds one or more
 L<Message::Passing> chains and returns them.
 
@@ -206,7 +206,7 @@ has been supplied.
 This module exists due to the wonderful people at Suretec Systems Ltd.
 <http://www.suretecsystems.com/> who sponsored its development for its
 VoIP division called SureVoIP <http://www.surevoip.co.uk/> for use with
-the SureVoIP API - 
+the SureVoIP API -
 <http://www.surevoip.co.uk/support/wiki/api_documentation>
 
 =head1 AUTHOR, COPYRIGHT AND LICENSE

@@ -1,10 +1,12 @@
 package Message::Passing::Role::Output;
-use Moose::Role;
+use Moo::Role;
 use JSON qw/ to_json /;
 use Scalar::Util qw/ blessed /;
-use namespace::autoclean;
+#use namespace::clean -except => 'meta';
 
 requires 'consume';
+
+no Moo::Role;
 
 1;
 

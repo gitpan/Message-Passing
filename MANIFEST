@@ -1,4 +1,5 @@
 .gitignore
+.travis.yml
 Changes
 inc/Module/Install.pm
 inc/Module/Install/Authority.pm
@@ -32,6 +33,7 @@ lib/Message/Passing/Filter/Null.pm
 lib/Message/Passing/Filter/T.pm
 lib/Message/Passing/Input/FileTail.pm
 lib/Message/Passing/Input/Null.pm
+lib/Message/Passing/Input/Socket/UDP.pm
 lib/Message/Passing/Input/STDIN.pm
 lib/Message/Passing/Manual.pod
 lib/Message/Passing/Manual/Components.pod
@@ -42,6 +44,7 @@ lib/Message/Passing/Output/Callback.pm
 lib/Message/Passing/Output/File.pm
 lib/Message/Passing/Output/IO/Handle.pm
 lib/Message/Passing/Output/Null.pm
+lib/Message/Passing/Output/Socket/UDP.pm
 lib/Message/Passing/Output/STDERR.pm
 lib/Message/Passing/Output/STDOUT.pm
 lib/Message/Passing/Output/Test.pm
@@ -57,7 +60,6 @@ lib/Message/Passing/Role/HasUsernameAndPassword.pm
 lib/Message/Passing/Role/Input.pm
 lib/Message/Passing/Role/Output.pm
 lib/Message/Passing/Role/Script.pm
-lib/Message/Passing/Types.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
@@ -82,4 +84,5 @@ t/output_null.t
 t/output_test.t
 t/role_connectionmanager.t
 t/role_hasaconnection.t
+t/socket_udp.t
 TODO

@@ -1,14 +1,15 @@
 package Message::Passing::Input::FileTail;
-use Moose;
+use Moo;
+use MooX::Types::MooseLike::Base qw/ Str Int /;
 use AnyEvent;
 use Scalar::Util qw/ weaken /;
-use namespace::autoclean;
+use namespace::clean -except => 'meta';
 
 with 'Message::Passing::Role::Input';
 
 has filename => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
@@ -45,7 +46,7 @@ sub BUILD {
     $self->_tail_handle;
 }
 
-__PACKAGE__->meta->make_immutable;
+
 1;
 
 =head1 NAME
@@ -58,6 +59,16 @@ Message::Passing::Input::FileTail - File tailing input
     {"foo":"bar"}
 
 =head1 DESCRIPTION
+
+=head1 METHODS
+
+=head2 filename
+
+The filename of the file to tail.
+
+=head2 tailer_pid
+
+The PID of the C<< tail -F >> being run.
 
 =head1 SEE ALSO
 

@@ -3,7 +3,6 @@ use warnings;
 
 use Test::More;
 
-use_ok("Message::Passing::Types") or BAIL_OUT("Types used everywhere!");
 use_ok('Message::Passing::Role::HasAConnection');
 use_ok('Message::Passing::Role::ConnectionManager');
 use_ok('Message::Passing');
@@ -26,6 +25,7 @@ use_ok('Message::Passing::Filter::Decoder::Null');
 use_ok('Message::Passing::Role::HasHostnameAndPort');
 use_ok('Message::Passing::Role::HasUsernameAndPassword');
 use_ok('Message::Passing::Role::HasErrorChain');
+use_ok('Message::Passing::Input::Socket::UDP');
 
 done_testing;
 
