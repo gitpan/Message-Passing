@@ -36,5 +36,5 @@ requires:
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.100
+version: 0.101
 x_authority: GHENRY
