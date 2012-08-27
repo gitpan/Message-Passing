@@ -16,6 +16,11 @@ inc/Module/Install/WriteAll.pm
 lib/Message/Passing.pm
 lib/Message/Passing/DSL.pm
 lib/Message/Passing/DSL/Factory.pm
+lib/Message/Passing/Exception.pm
+lib/Message/Passing/Exception/ConnectionDisconnected.pm
+lib/Message/Passing/Exception/ConnectionTimeout.pm
+lib/Message/Passing/Exception/Decoding.pm
+lib/Message/Passing/Exception/Encoding.pm
 lib/Message/Passing/Filter/All.pm
 lib/Message/Passing/Filter/Decoder/Bzip2.pm
 lib/Message/Passing/Filter/Decoder/Crypt/CBC.pm
@@ -75,6 +80,7 @@ t/compress.t
 t/configfile.t
 t/crypt_cbc.t
 t/dsl.t
+t/errorchain.t
 t/filter.t
 t/input_decode.t
 t/input_output_coerce.t

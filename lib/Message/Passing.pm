@@ -8,7 +8,7 @@ use MooX::Options flavour => [qw( pass_through )], protect_argv => 0;
 use namespace::clean -except => [qw/ meta new_with_options parse_options _options_data _options_config/];
 use 5.8.4;
 
-our $VERSION = '0.101';
+our $VERSION = '0.102';
 $VERSION = eval $VERSION;
 
 sub new_with_options {
@@ -33,6 +33,7 @@ with
     CLIComponent( name => 'decoder', default => 'JSON' ),
     CLIComponent( name => 'encoder', default => 'JSON' ),
     CLIComponent( name => 'error', default => 'STDERR' ),
+    CLIComponent( name => 'error_encoder', default => 'Message::Passing::Filter::Encoder::JSON' ),
     'Message::Passing::Role::Script';
 
 option configfile => (
@@ -53,8 +54,12 @@ sub build_chain {
     my $self = shift;
     message_chain {
         error_log(
-            %{ $self->error_options },
-            class => $self->error,
+            %{ $self->error_encoder_options },
+            class => $self->error_encoder,
+            output_to => output error => (
+                %{ $self->error_options },
+                class => $self->error,
+            ),
         );
         output output => (
             %{ $self->output_options },
@@ -305,6 +310,3 @@ please talk to us as we'd be willing to consider re-licensing under
 less restrictive terms.
 
 =cut
-
-1;
-
