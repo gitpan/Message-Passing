@@ -23,6 +23,7 @@ requires:
   AnyEvent: 0
   AnyEvent::Handle::UDP: 0
   Config::Any: 0
+  DateTime: 0
   JSON: 2.0
   Module::Runtime: 0.013
   Moo: 0.091011
@@ -30,11 +31,12 @@ requires:
   MooX::Types::MooseLike: 0.08
   Package::Variant: 1.001001
   String::RewritePrefix: 0
+  Sys::Hostname: 0
   Task::Weaken: 0
   Try::Tiny: 0
   namespace::clean: 0.23
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.102
+version: 0.103
 x_authority: GHENRY

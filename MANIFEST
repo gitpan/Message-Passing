@@ -36,6 +36,7 @@ lib/Message/Passing/Filter/Encoder/Null.pm
 lib/Message/Passing/Filter/Key.pm
 lib/Message/Passing/Filter/Null.pm
 lib/Message/Passing/Filter/T.pm
+lib/Message/Passing/Filter/ToLogstash.pm
 lib/Message/Passing/Input/FileTail.pm
 lib/Message/Passing/Input/Null.pm
 lib/Message/Passing/Input/Socket/UDP.pm
@@ -82,6 +83,7 @@ t/crypt_cbc.t
 t/dsl.t
 t/errorchain.t
 t/filter.t
+t/filter_tologstash.t
 t/input_decode.t
 t/input_output_coerce.t
 t/logstash_script.t

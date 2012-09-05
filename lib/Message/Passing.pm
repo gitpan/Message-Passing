@@ -8,7 +8,7 @@ use MooX::Options flavour => [qw( pass_through )], protect_argv => 0;
 use namespace::clean -except => [qw/ meta new_with_options parse_options _options_data _options_config/];
 use 5.8.4;
 
-our $VERSION = '0.102';
+our $VERSION = '0.103';
 $VERSION = eval $VERSION;
 
 sub new_with_options {
@@ -101,9 +101,6 @@ Message::Passing - a simple way of doing messaging.
     {"foo":"bar"}
 
 =head1 DESCRIPTION
-
-This implementation is currently a prototype, and as such should be considered
-alpha and subject to change at any point.
 
 A library for building high performance, loosely coupled and reliable/reseliant applications,
 structured as small services which communicate over the network by passing messages.
