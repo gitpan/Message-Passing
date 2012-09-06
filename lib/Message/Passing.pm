@@ -8,12 +8,13 @@ use MooX::Options flavour => [qw( pass_through )], protect_argv => 0;
 use namespace::clean -except => [qw/ meta new_with_options parse_options _options_data _options_config/];
 use 5.8.4;
 
-our $VERSION = '0.103';
+our $VERSION = '0.104';
 $VERSION = eval $VERSION;
 
-sub new_with_options {
+around 'parse_options' => sub {
+    my $orig = shift;
     my $class = shift;
-    my %args = $class->parse_options(@_);
+    my %args = $orig->($class, @_);
 
     if (my $conf = $args{configfile}) {
         my $cfg = $class->get_config_from_file($conf);
@@ -23,8 +24,10 @@ sub new_with_options {
             }
         }
     }
-    $class->new(%args);
-}
+
+    return %args;
+};
+
 
 with
     CLIComponent( name => 'input' ),
