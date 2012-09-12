@@ -1,3 +1,9 @@
+0.106
+  - Remove debug warning accidentally left in the UDP input.
+
+0.105
+  - Depend on latest MooX::Options to stop install fails.
+
 0.104
   - Fix to work with MooX::Options 3.7
 
