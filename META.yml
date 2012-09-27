@@ -31,12 +31,12 @@ requires:
   MooX::Types::MooseLike: 0.08
   Package::Variant: 1.001001
   String::RewritePrefix: 0
-  Sys::Hostname: 0
+  Sys::Hostname::Long: 0
   Task::Weaken: 0
   Try::Tiny: 0
   namespace::clean: 0.23
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.106
+version: 0.107
 x_authority: GHENRY
