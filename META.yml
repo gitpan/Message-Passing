@@ -24,6 +24,7 @@ requires:
   AnyEvent::Handle::UDP: 0
   Config::Any: 0
   DateTime: 0
+  IO::Handle: 0
   JSON: 2.0
   Module::Runtime: 0.013
   Moo: 0.091011
@@ -38,5 +39,5 @@ requires:
   perl: 5.8.4
 resources:
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.110
+version: 0.111
 x_authority: GHENRY
