@@ -7,8 +7,8 @@ use Module::Install::Authority;
 
 all_from 'lib/Message/Passing.pm';
 
-license 'AGPL_3';
-authority('GHENRY');
+license 'LGPL_2_1';
+authority('cpan:GHENRY');
 resources(
     repository => "git://github.com/suretec/Message-Passing.git",
 );

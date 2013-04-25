@@ -8,7 +8,7 @@ use MooX::Options flavour => [qw( pass_through )], protect_argv => 0;
 use namespace::clean -except => [qw/ meta new_with_options parse_options _options_data _options_config/];
 use 5.008004;
 
-our $VERSION = '0.111';
+our $VERSION = '0.112';
 $VERSION = eval $VERSION;
 
 around 'parse_options' => sub {
@@ -303,10 +303,7 @@ which we do not reuse any code from) is copyright 2010 Jorden Sissel.
 
 =head1 LICENSE
 
-GNU Affero General Public License, Version 3
-
-If you feel this is too restrictive to be able to use this software,
-please talk to us as we'd be willing to consider re-licensing under
-less restrictive terms.
+GNU Library General Public License, Version 2.1
 
 =cut
+
