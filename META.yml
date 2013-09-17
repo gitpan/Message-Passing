@@ -40,5 +40,5 @@ requires:
 resources:
   license: http://opensource.org/licenses/lgpl-license.php
   repository: git://github.com/suretec/Message-Passing.git
-version: 0.113
+version: 0.114
 x_authority: cpan:GHENRY
